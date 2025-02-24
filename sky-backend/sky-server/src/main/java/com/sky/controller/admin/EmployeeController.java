@@ -112,12 +112,25 @@ public class EmployeeController {
      * 启用禁用员工账号
      *
      * @param status 目标启用/禁用状态信息
-     * @param id 员工id
+     * @param id     员工id
      */
     @PostMapping("/status/{status}")
     @ApiOperation("启用禁用员工账号")
     public Result startOrStopEmployee(@PathVariable Integer status, Long id) {
         employeeService.startOrStopEmployee(status, id);
         return Result.success();
+    }
+
+    /**
+     * 根据id查询员工
+     *
+     * @param id 员工id
+     * @return Result类响应对象
+     */
+    @GetMapping("/{id}")
+    @ApiOperation("根据id查询员工")
+    public Result<Employee> getEmployeeById(@PathVariable Long id) {
+        Employee employee = employeeService.getEmployeeById(id);
+        return Result.success(employee);
     }
 }
