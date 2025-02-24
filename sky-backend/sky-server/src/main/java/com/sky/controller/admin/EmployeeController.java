@@ -1,6 +1,9 @@
 package com.sky.controller.admin;
 
 import com.sky.constant.JwtClaimsConstant;
+import com.sky.constant.MessageConstant;
+import com.sky.constant.StatusConstant;
+import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
@@ -8,6 +11,7 @@ import com.sky.result.Result;
 import com.sky.service.EmployeeService;
 import com.sky.utils.JwtUtil;
 import com.sky.vo.EmployeeLoginVO;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 员工管理
@@ -38,6 +43,7 @@ public class EmployeeController {
      * @return Result类响应对象
      */
     @PostMapping("/login")
+    @ApiOperation("员工登录")
     public Result<EmployeeLoginVO> login(@RequestBody EmployeeLoginDTO employeeLoginDTO) {
         log.info("员工登录：{}", employeeLoginDTO);
 
@@ -67,8 +73,26 @@ public class EmployeeController {
      * @return Result类响应对象
      */
     @PostMapping("/logout")
+    @ApiOperation("员工退出")
     public Result<String> logout() {
         return Result.success();
     }
 
+    /**
+     * 新增员工
+     *
+     * @param employeeDTO 员工DTO对象
+     * @return Result类响应对象
+     */
+    @PostMapping
+    @ApiOperation("新增员工")
+    public Result<String> addEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        Integer status = employeeService.addEmployee(employeeDTO);
+        Result<String> result;
+        if (Objects.equals(status, StatusConstant.ENABLE))
+            result = Result.success();
+        else
+            result = Result.error(MessageConstant.UNKNOWN_ERROR);
+        return result;
+    }
 }
