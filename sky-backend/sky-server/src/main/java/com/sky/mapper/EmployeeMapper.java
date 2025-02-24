@@ -36,4 +36,11 @@ public interface EmployeeMapper {
      * @return Page类分页对象
      */
     Page<Employee> getEmployeeListPage(EmployeePageQueryDTO employeePageQueryDTO);
+
+    /**
+     * 根据主键id动态修改属性
+     *
+     * @param employee 员工实体类对象
+     */
+    void updateEmployee(Employee employee);
 }

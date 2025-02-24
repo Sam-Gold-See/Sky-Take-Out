@@ -31,4 +31,12 @@ public interface EmployeeService {
      * @return PageResult类响应对象
      */
     PageResult getEmployeeListPage(EmployeePageQueryDTO employeePageQueryDTO);
+
+    /**
+     * 启用禁用员工账号
+     *
+     * @param status 目标启用/禁用状态信息
+     * @param id 员工id
+     */
+    void startOrStopEmployee(Integer status, Long id);
 }

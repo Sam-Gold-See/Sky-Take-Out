@@ -73,7 +73,7 @@ public class EmployeeController {
      */
     @PostMapping("/logout")
     @ApiOperation("员工退出")
-    public Result<String> logout() {
+    public Result logout() {
         return Result.success();
     }
 
@@ -85,9 +85,9 @@ public class EmployeeController {
      */
     @PostMapping
     @ApiOperation("新增员工")
-    public Result<String> addEmployee(@RequestBody EmployeeDTO employeeDTO) {
+    public Result addEmployee(@RequestBody EmployeeDTO employeeDTO) {
         Integer status = employeeService.addEmployee(employeeDTO);
-        Result<String> result;
+        Result result;
         if (Objects.equals(status, StatusConstant.ENABLE))
             result = Result.success();
         else
@@ -106,5 +106,18 @@ public class EmployeeController {
     public Result<PageResult> getEmployeeListPage(EmployeePageQueryDTO employeePageQueryDTO) {
         PageResult pageResult = employeeService.getEmployeeListPage(employeePageQueryDTO);
         return Result.success(pageResult);
+    }
+
+    /**
+     * 启用禁用员工账号
+     *
+     * @param status 目标启用/禁用状态信息
+     * @param id 员工id
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("启用禁用员工账号")
+    public Result startOrStopEmployee(@PathVariable Integer status, Long id) {
+        employeeService.startOrStopEmployee(status, id);
+        return Result.success();
     }
 }
