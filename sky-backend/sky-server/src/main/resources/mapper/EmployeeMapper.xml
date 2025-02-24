@@ -27,7 +27,7 @@
                 phone = #{phone},
             </if>
             <if test="sex != null">
-                sex = #{sex}
+                sex = #{sex},
             </if>
             <if test="idNumber != null">
                 id_number = #{idNumber},
