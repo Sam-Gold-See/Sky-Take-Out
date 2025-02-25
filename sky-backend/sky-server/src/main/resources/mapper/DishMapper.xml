@@ -25,4 +25,12 @@
         </where>
         order by d.create_time desc
     </select>
+    <delete id="deleteDishByIds">
+        <if test="ids != null and id.size() > 0">
+            delete from dish where id in
+            <foreach collection="ids" item="id" separator="," open="(" close=")">
+                #{id}
+            </foreach>
+        </if>
+    </delete>
 </mapper>
