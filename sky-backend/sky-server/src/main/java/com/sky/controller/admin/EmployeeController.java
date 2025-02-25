@@ -101,7 +101,7 @@ public class EmployeeController {
      * 员工分页查询
      *
      * @param employeePageQueryDTO 员工分页查询DTO
-     * @return PageResult类响应对象
+     * @return Result类响应对象
      */
     @GetMapping("/page")
     @ApiOperation("员工分页查询")
@@ -115,6 +115,7 @@ public class EmployeeController {
      *
      * @param status 目标启用/禁用状态信息
      * @param id     员工id
+     * @return Result类响应对象
      */
     @PostMapping("/status/{status}")
     @ApiOperation("启用禁用员工账号")
