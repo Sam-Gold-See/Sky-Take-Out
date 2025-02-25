@@ -71,10 +71,9 @@ public class EmployeeServiceImpl implements EmployeeService {
      * 新增员工
      *
      * @param employeeDTO 员工DTO对象
-     * @return Integer类状态码
      */
     @Override
-    public Integer addEmployee(EmployeeDTO employeeDTO) {
+    public void addEmployee(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
 
         //对象属性拷贝
@@ -94,7 +93,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setCreateUser(BaseContext.getCurrentId());
         employee.setUpdateUser(BaseContext.getCurrentId());
 
-        return employeeMapper.insertUser(employee);
+        employeeMapper.insertUser(employee);
     }
 
     /**

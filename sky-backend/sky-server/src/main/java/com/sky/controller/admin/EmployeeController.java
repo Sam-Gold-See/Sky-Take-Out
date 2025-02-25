@@ -88,13 +88,8 @@ public class EmployeeController {
     @PostMapping
     @ApiOperation("新增员工")
     public Result addEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        Integer status = employeeService.addEmployee(employeeDTO);
-        Result result;
-        if (Objects.equals(status, StatusConstant.ENABLE))
-            result = Result.success();
-        else
-            result = Result.error(MessageConstant.UNKNOWN_ERROR);
-        return result;
+        employeeService.addEmployee(employeeDTO);
+        return Result.success();
     }
 
     /**

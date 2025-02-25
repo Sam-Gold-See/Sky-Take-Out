@@ -20,9 +20,8 @@ public interface EmployeeService {
      * 新增员工
      *
      * @param employeeDTO 员工DTO对象
-     * @return Integer类状态码
      */
-    Integer addEmployee(EmployeeDTO employeeDTO);
+    void addEmployee(EmployeeDTO employeeDTO);
 
     /**
      * 员工分页查询
