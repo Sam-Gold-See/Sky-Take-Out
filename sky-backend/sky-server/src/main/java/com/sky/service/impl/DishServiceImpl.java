@@ -2,12 +2,16 @@ package com.sky.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.sky.constant.MessageConstant;
+import com.sky.constant.StatusConstant;
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
+import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
+import com.sky.mapper.SetmealDishMapper;
 import com.sky.result.PageResult;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
@@ -17,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class DishServiceImpl implements DishService {
@@ -26,6 +31,9 @@ public class DishServiceImpl implements DishService {
 
     @Autowired
     DishFlavorMapper dishFlavorMapper;
+
+    @Autowired
+    SetmealDishMapper setmealDishMapper;
 
     /**
      * 新增菜品和相对应的口味
@@ -68,5 +76,36 @@ public class DishServiceImpl implements DishService {
         List<DishVO> records = page.getResult();
 
         return new PageResult(total, records);
+    }
+
+    /**
+     * 菜品的批量删除
+     *
+     * @param ids 菜品id集合
+     */
+    @Transactional
+    @Override
+    public void deleteDishes(List<Long> ids) {
+        //判断当前菜品能否能够删除--是否存在起售中的菜品
+        for (Long id : ids) {
+            Dish dish = dishMapper.getDishById(id);
+            if (Objects.equals(dish.getStatus(), StatusConstant.ENABLE))
+                throw new DeletionNotAllowedException(MessageConstant.DISH_ON_SALE);
+        }
+
+        //判断当前菜品是否能够删除--是否被套餐关联了
+        List<Long> setmealIds = setmealDishMapper.getSetmealDishIds(ids);
+        if (setmealIds != null && !setmealIds.isEmpty()) {
+            //当前菜品被套餐关联了，不能删除
+            throw new DeletionNotAllowedException(MessageConstant.DISH_BE_RELATED_BY_SETMEAL);
+        }
+
+        //删除菜品表中的菜品数据
+        //删除菜品关联的口味数据
+        for (Long id : ids) {
+            dishMapper.deleteDishById(id);
+            dishFlavorMapper.deleteFlavorByDishId(id);
+        }
+
     }
 }
