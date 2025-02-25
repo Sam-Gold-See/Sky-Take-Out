@@ -57,4 +57,17 @@ public class CategoryController {
         PageResult pageResult = categoryService.getCategoryListPage(categoryPageQueryDTO);
         return Result.success(pageResult);
     }
+
+    /**
+     * 根据id删除分类
+     *
+     * @param id 分类id
+     * @return Result类响应对象
+     */
+    @DeleteMapping()
+    @ApiOperation("根据id删除分类")
+    public Result deleteCategoryById(@RequestParam Integer id) {
+        categoryService.deleteCategoryById(id);
+        return Result.success();
+    }
 }
