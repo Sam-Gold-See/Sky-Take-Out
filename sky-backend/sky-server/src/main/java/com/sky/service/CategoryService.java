@@ -21,7 +21,7 @@ public interface CategoryService {
      * 分类分页查询
      *
      * @param categoryPageQueryDTO 分类分页查询DTO对象
-     * @return PageResult
+     * @return PageResult类分页查询响应对象
      */
     PageResult getCategoryListPage(CategoryPageQueryDTO categoryPageQueryDTO);
 

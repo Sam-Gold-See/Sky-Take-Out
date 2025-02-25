@@ -54,7 +54,7 @@ public class CategoryServiceImpl implements CategoryService {
      * 分类分页查询
      *
      * @param categoryPageQueryDTO 分类分页查询DTO
-     * @return PageResult
+     * @return PageResult类分页查询响应对象
      */
     @Override
     public PageResult getCategoryListPage(CategoryPageQueryDTO categoryPageQueryDTO) {
