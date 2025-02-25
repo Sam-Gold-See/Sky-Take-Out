@@ -64,10 +64,23 @@ public class CategoryController {
      * @param id 分类id
      * @return Result类响应对象
      */
-    @DeleteMapping()
+    @DeleteMapping
     @ApiOperation("根据id删除分类")
     public Result deleteCategoryById(@RequestParam Long id) {
         categoryService.deleteCategoryById(id);
+        return Result.success();
+    }
+
+    /**
+     * 根据id修改分类
+     *
+     * @param categoryDTO 分类DTO对象
+     * @return Result类响应对象
+     */
+    @PutMapping
+    @ApiOperation("根据id修改分类")
+    public Result updateCategoryById(@RequestBody CategoryDTO categoryDTO) {
+        categoryService.updateCategoryById(categoryDTO);
         return Result.success();
     }
 }

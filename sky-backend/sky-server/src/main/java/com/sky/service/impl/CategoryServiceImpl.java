@@ -86,16 +86,33 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteCategoryById(Long id) {
         //查询当前分类是否关联了菜品，如果关联了就抛出业务异常
         Integer count = dishMapper.getCountByCategoryId(id);
-        if(count > 0)
+        if (count > 0)
             //当前分类下有菜品，不能删除
             throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_DISH);
 
         count = setmealMapper.getCountByCategoryId(id);
-        if(count > 0)
+        if (count > 0)
             //当前分类下有套餐
             throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_SETMEAL);
 
         //删除分类数据
         categoryMapper.deleteCategoryById(id);
+    }
+
+    /**
+     * 根据id修改分类
+     *
+     * @param categoryDTO 分类DTO对象
+     */
+    @Override
+    public void updateCategoryById(CategoryDTO categoryDTO) {
+        Category category = new Category();
+
+        BeanUtils.copyProperties(categoryDTO, category);
+
+        category.setUpdateTime(LocalDateTime.now());
+        category.setUpdateUser(BaseContext.getCurrentId());
+
+        categoryMapper.updateCategory(category);
     }
 }

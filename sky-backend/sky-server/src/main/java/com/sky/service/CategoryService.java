@@ -17,7 +17,7 @@ public interface CategoryService {
     /**
      * 分类分页查询
      *
-     * @param categoryPageQueryDTO 分类分页查询DTO
+     * @param categoryPageQueryDTO 分类分页查询DTO对象
      * @return PageResult
      */
     PageResult getCategoryListPage(CategoryPageQueryDTO categoryPageQueryDTO);
@@ -28,4 +28,11 @@ public interface CategoryService {
      * @param id 分类id
      */
     void deleteCategoryById(Long id);
+
+    /**
+     * 根据id修改分类
+     *
+     * @param categoryDTO 分类DTO对象
+     */
+    void updateCategoryById(CategoryDTO categoryDTO);
 }
