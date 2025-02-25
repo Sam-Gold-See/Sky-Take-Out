@@ -4,6 +4,7 @@ import com.sky.constant.MessageConstant;
 import com.sky.constant.StatusConstant;
 import com.sky.dto.CategoryDTO;
 import com.sky.dto.CategoryPageQueryDTO;
+import com.sky.entity.Category;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.CategoryService;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -66,7 +68,7 @@ public class CategoryController {
      */
     @DeleteMapping
     @ApiOperation("根据id删除分类")
-    public Result deleteCategoryById(@RequestParam Long id) {
+    public Result deleteCategoryById(Long id) {
         categoryService.deleteCategoryById(id);
         return Result.success();
     }
