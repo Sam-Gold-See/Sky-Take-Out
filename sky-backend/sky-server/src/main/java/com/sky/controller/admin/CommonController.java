@@ -33,7 +33,9 @@ public class CommonController {
     @PostMapping("/upload")
     @ApiOperation("文件上传")
     public Result<String> uploadFile(MultipartFile file) {
+        return Result.success();
 
+        /*
         try {
             //原始文件名
             String originalFilename = file.getOriginalFilename();
@@ -50,5 +52,6 @@ public class CommonController {
         }
 
         return Result.error(MessageConstant.UPLOAD_FAILED);
+        */
     }
 }
