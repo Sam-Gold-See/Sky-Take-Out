@@ -3,16 +3,15 @@ package com.sky.controller.admin;
 import com.sky.constant.MessageConstant;
 import com.sky.constant.StatusConstant;
 import com.sky.dto.CategoryDTO;
+import com.sky.dto.CategoryPageQueryDTO;
+import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 
@@ -44,5 +43,18 @@ public class CategoryController {
         else
             result = Result.error(MessageConstant.UNKNOWN_ERROR);
         return result;
+    }
+
+    /**
+     * 分类分页查询
+     *
+     * @param categoryPageQueryDTO 分类分页查询DTO
+     * @return Result类响应对象
+     */
+    @GetMapping("/page")
+    @ApiOperation("分类分页查询")
+    public Result<PageResult> getCategoryListPage(CategoryPageQueryDTO categoryPageQueryDTO) {
+        PageResult pageResult = categoryService.getCategoryListPage(categoryPageQueryDTO);
+        return Result.success(pageResult);
     }
 }
