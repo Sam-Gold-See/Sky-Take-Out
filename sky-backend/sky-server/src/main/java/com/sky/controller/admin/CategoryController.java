@@ -99,4 +99,17 @@ public class CategoryController {
         categoryService.startOrStopCategory(status, id);
         return Result.success();
     }
+
+    /**
+     * 根据类型查询分类
+     *
+     * @param type 类型分类
+     * @return Result类响应对象
+     */
+    @GetMapping("/list")
+    @ApiOperation("根据类型查询分类")
+    public Result<List<Category>> getCategoryListByType(Integer type) {
+        List<Category> list = categoryService.getCategoryListByType(type);
+        return Result.success(list);
+    }
 }

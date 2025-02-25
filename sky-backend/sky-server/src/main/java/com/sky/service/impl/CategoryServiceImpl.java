@@ -131,4 +131,15 @@ public class CategoryServiceImpl implements CategoryService {
 
         categoryMapper.updateCategory(category);
     }
+
+    /**
+     * 根据类型查询分类
+     *
+     * @param type 类型分类
+     * @return List<Category>分类集合类
+     */
+    @Override
+    public List<Category> getCategoryListByType(Integer type) {
+        return categoryMapper.getCategoryListByType(type);
+    }
 }
