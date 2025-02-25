@@ -27,5 +27,5 @@ public interface CategoryService {
      *
      * @param id 分类id
      */
-    void deleteCategoryById(Integer id);
+    void deleteCategoryById(Long id);
 }
