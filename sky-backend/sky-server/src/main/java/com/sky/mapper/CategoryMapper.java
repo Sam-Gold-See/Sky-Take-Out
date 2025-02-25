@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper
 public interface CategoryMapper {
 
-    /**
+    /**P
      * 新增分类
      *
      * @param category 分类对象
