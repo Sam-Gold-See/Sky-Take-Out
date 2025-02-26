@@ -46,4 +46,11 @@ public interface DishService {
      * @param id     菜品id
      */
     void startOrStopDish(Integer status, Long id);
+
+    /**
+     * 根据id修改菜品和对应口味
+     *
+     * @param dishDTO 菜品DTO对象类
+     */
+    void updateDishWithFlavorById(DishDTO dishDTO);
 }

@@ -91,4 +91,17 @@ public class DishController {
         dishService.startOrStopDish(status, id);
         return Result.success();
     }
+
+    /**
+     * 修改菜品
+     *
+     * @param dishDTO 菜品DTO对象类
+     * @return Result对象类
+     */
+    @PutMapping
+    @ApiOperation("修改菜品")
+    public Result updateDishById(@RequestBody DishDTO dishDTO) {
+        dishService.updateDishWithFlavorById(dishDTO);
+        return Result.success();
+    }
 }
