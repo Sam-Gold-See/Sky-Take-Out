@@ -1,5 +1,6 @@
 package com.sky.mapper;
 
+import com.sky.vo.SetmealVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -13,4 +14,13 @@ public interface SetmealMapper {
      */
     @Select("select count(id) from setmeal where category_id = #{categoryId}")
     Integer getCountByCategoryId(Long categoryId);
+
+    /**
+     * 根据id查询套餐VO类
+     *
+     * @param id 套餐id
+     * @return SetmealVO套餐VO类对象
+     */
+    @Select("select * from setmeal where id = #{id}")
+    SetmealVO getSetmealVOById(Long id);
 }

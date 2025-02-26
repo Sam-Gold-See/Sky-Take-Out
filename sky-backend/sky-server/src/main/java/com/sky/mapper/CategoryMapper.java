@@ -8,13 +8,14 @@ import com.sky.enumeration.OperationType;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
 @Mapper
 public interface CategoryMapper {
 
-    /**P
+    /**
      * 新增分类
      *
      * @param category 分类对象
@@ -57,4 +58,13 @@ public interface CategoryMapper {
      * @return List<Category>分类集合类
      */
     List<Category> getCategoryListByType(Integer type);
+
+
+    /**
+     * 根据id查询类型名字
+     * @param id 类型id
+     * @return String类类型名字
+     * */
+    @Select("select name from category where id = #{id}")
+    String getCategoryNameById(Long id);
 }
