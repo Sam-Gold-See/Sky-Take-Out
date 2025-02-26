@@ -88,4 +88,17 @@ public class SetmealController {
         setmealService.deleteSetmealByIds(ids);
         return Result.success();
     }
+
+    /**
+     * 修改套餐
+     *
+     * @param setmealDTO 套餐DTO类对象
+     * @return Result类响应对象
+     */
+    @PutMapping
+    @ApiOperation("修改套餐")
+    public Result updateSetmeal(@RequestBody SetmealDTO setmealDTO) {
+        setmealService.updateSetmeal(setmealDTO);
+        return Result.success();
+    }
 }

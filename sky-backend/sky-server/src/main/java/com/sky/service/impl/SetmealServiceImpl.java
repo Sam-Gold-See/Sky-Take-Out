@@ -140,6 +140,7 @@ public class SetmealServiceImpl implements SetmealService {
      *
      * @param ids 套餐id集合类
      */
+    @Transactional
     @Override
     public void deleteSetmealByIds(List<Long> ids) {
         ids.forEach(id -> {
@@ -152,5 +153,28 @@ public class SetmealServiceImpl implements SetmealService {
             setmealMapper.deleteSetmealById(setmealId);
             setmealDishMapper.deleteSetmealDishBySetmealId(setmealId);
         });
+    }
+
+    /**
+     * 修改套餐
+     *
+     * @param setmealDTO 套餐DTO类对象
+     */
+    @Transactional
+    @Override
+    public void updateSetmeal(SetmealDTO setmealDTO) {
+        Setmeal setmeal = new Setmeal();
+        BeanUtils.copyProperties(setmealDTO, setmeal);
+
+        setmealMapper.updateSetmeal(setmeal);
+
+        Long setmealId = setmeal.getId();
+
+        setmealDishMapper.deleteSetmealDishBySetmealId(setmealId);
+
+        List<SetmealDish> setmealDishes = setmealDTO.getSetmealDishes();
+        setmealDishes.forEach(setmealDish -> setmealDish.setSetmealId(setmealId));
+
+        setmealDishMapper.insertSetmealDishes(setmealDishes);
     }
 }
