@@ -1,6 +1,8 @@
 package com.sky.mapper;
 
+import com.github.pagehelper.Page;
 import com.sky.annotation.AutoFill;
+import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
 import com.sky.enumeration.OperationType;
 import com.sky.vo.SetmealVO;
@@ -40,4 +42,12 @@ public interface SetmealMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     @AutoFill(OperationType.INSERT)
     void insertSetmeal(Setmeal setmeal);
+
+    /**
+     * 套餐分页查询
+     *
+     * @param setmealPageQueryDTO 套餐分页查询DTO类对象
+     * @return Page<SetmealVO>类分页集合类
+     */
+    Page<SetmealVO> getSetmealListPage(SetmealPageQueryDTO setmealPageQueryDTO);
 }
