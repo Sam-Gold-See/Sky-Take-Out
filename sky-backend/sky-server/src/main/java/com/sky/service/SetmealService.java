@@ -29,4 +29,12 @@ public interface SetmealService {
      * @return PageResult类分页查询对象
      */
     PageResult getSetmealListPage(SetmealPageQueryDTO setmealPageQueryDTO);
+
+    /**
+     * 起售/停售套餐
+     *
+     * @param status 目标套餐起售停售状态
+     * @param id     目标套餐id
+     */
+    void startOrStopSetmeal(Integer status, Long id);
 }

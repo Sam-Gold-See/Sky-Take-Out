@@ -2,11 +2,16 @@ package com.sky.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.sky.constant.MessageConstant;
+import com.sky.constant.StatusConstant;
 import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
+import com.sky.entity.Dish;
 import com.sky.entity.Setmeal;
 import com.sky.entity.SetmealDish;
+import com.sky.exception.SetmealEnableFailedException;
 import com.sky.mapper.CategoryMapper;
+import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealDishMapper;
 import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
@@ -18,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class SetmealServiceImpl implements SetmealService {
@@ -30,6 +36,9 @@ public class SetmealServiceImpl implements SetmealService {
 
     @Autowired
     private SetmealDishMapper setmealDishMapper;
+
+    @Autowired
+    private DishMapper dishMapper;
 
     /**
      * 根据id查询套餐
@@ -97,5 +106,31 @@ public class SetmealServiceImpl implements SetmealService {
         List<SetmealVO> records = page.getResult();
 
         return new PageResult(total, records);
+    }
+
+    /**
+     * 起售/停售套餐
+     *
+     * @param status 目标套餐起售停售状态
+     * @param id     目标套餐id
+     */
+    @Override
+    public void startOrStopSetmeal(Integer status, Long id) {
+        if(Objects.equals(status, StatusConstant.ENABLE)){
+            List<Dish> dishList = dishMapper.getDishListBySetmealId(id);
+            if(dishList != null && !dishList.isEmpty()){
+                dishList.forEach(dish -> {
+                    if(StatusConstant.ENABLE.equals(dish.getStatus()))
+                        throw new SetmealEnableFailedException(MessageConstant.SETMEAL_ENABLE_FAILED);
+                });
+            }
+        }
+
+        Setmeal setmeal = new Setmeal();
+
+        setmeal.setId(id);
+        setmeal.setStatus(status);
+
+        setmealMapper.updateSetmeal(setmeal);
     }
 }

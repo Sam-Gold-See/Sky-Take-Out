@@ -50,4 +50,12 @@ public interface SetmealMapper {
      * @return Page<SetmealVO>类分页集合类
      */
     Page<SetmealVO> getSetmealListPage(SetmealPageQueryDTO setmealPageQueryDTO);
+
+    /**
+     * 根据id动态更新套餐
+     *
+     * @param setmeal 套餐实体类对象
+     */
+    @AutoFill(OperationType.UPDATE)
+    void updateSetmeal(Setmeal setmeal);
 }
