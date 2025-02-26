@@ -11,6 +11,7 @@ import com.sky.vo.SetmealVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -59,9 +60,18 @@ public class SetmealServiceImpl implements SetmealService {
 
         Long setmealId = setmeal.getId();
 
+        /*
         for (SetmealDish setmealDish : setmealDTO.getSetmealDishes()) {
             setmealDish.setSetmealId(setmealId);
             setmealDishMapper.insertSetmealDish(setmealDish);
+        }
+        */
+
+        List<SetmealDish> list = setmealDTO.getSetmealDishes();
+
+        if (list != null && !list.isEmpty()) {
+            list.forEach(setmealDish -> setmealDish.setSetmealId(setmealId));
+            setmealDishMapper.insertSetmealDishes(list);
         }
     }
 }

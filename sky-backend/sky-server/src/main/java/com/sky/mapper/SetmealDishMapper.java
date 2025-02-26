@@ -26,10 +26,17 @@ public interface SetmealDishMapper {
     /**
      * 新增单个套餐内菜品关联
      *
-     * @param setmealDish 套餐内菜品关联
+     * @param setmealDish 套餐菜品关联类
      */
     @Insert("insert into setmeal_dish (setmeal_id, dish_id, name, price, copies) " +
             "values " +
             "(#{setmealId}, #{dishId}, #{name}, #{price}, #{copies})")
     void insertSetmealDish(SetmealDish setmealDish);
+
+    /**
+     * 新增多个套餐内菜品关联
+     *
+     * @param setmealDishes 套餐菜品关联集合类
+     */
+    void insertSetmealDishes(List<SetmealDish> setmealDishes);
 }
