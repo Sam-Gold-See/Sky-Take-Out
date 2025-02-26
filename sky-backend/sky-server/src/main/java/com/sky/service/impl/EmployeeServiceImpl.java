@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
 import com.sky.constant.PasswordConstant;
 import com.sky.constant.StatusConstant;
+import com.sky.dto.EditPasswordDTO;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
@@ -149,6 +150,34 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void updateEmployee(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDTO, employee);
+
+        employeeMapper.updateEmployee(employee);
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param editPasswordDTO 修改密码数据传输类
+     */
+    @Override
+    public void updateEmployeePassword(EditPasswordDTO editPasswordDTO) {
+        Long empId = editPasswordDTO.getEmpId();
+
+        Employee employee = employeeMapper.getEmployeeById(empId);
+
+        if (employee == null)
+            throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);
+
+        String oldPassword = DigestUtils.md5DigestAsHex(editPasswordDTO.getOldPassword().getBytes());
+        String oldPasswordTrue = employee.getPassword();
+
+        if (!Objects.equals(oldPasswordTrue, oldPassword))
+            throw new PasswordErrorException(MessageConstant.OLD_PASSWORD_ERROR);
+
+        String newPassword = DigestUtils.md5DigestAsHex(editPasswordDTO.getNewPassword().getBytes());
+
+        employee.setId(empId);
+        employee.setPassword(newPassword);
 
         employeeMapper.updateEmployee(employee);
     }
