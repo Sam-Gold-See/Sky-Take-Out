@@ -33,6 +33,7 @@ public class SetmealServiceImpl implements SetmealService {
      * @param id 套餐id
      * @return SetmealVO套餐VO类对象
      */
+    @Transactional
     @Override
     public SetmealVO getSetmealVOById(Long id) {
         SetmealVO setmealVO = setmealMapper.getSetmealVOById(id);
@@ -51,6 +52,7 @@ public class SetmealServiceImpl implements SetmealService {
      *
      * @param setmealDTO 套餐DTO类对象
      */
+    @Transactional
     @Override
     public void insertSetmeal(SetmealDTO setmealDTO) {
         Setmeal setmeal = new Setmeal();
