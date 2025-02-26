@@ -133,4 +133,20 @@ public class DishServiceImpl implements DishService {
 
         return dishVO;
     }
+
+    /**
+     * 启用禁用菜品
+     *
+     * @param status 目标启用/禁用状态信息
+     * @param id     菜品id
+     */
+    @Override
+    public void startOrStopDish(Integer status, Long id) {
+        Dish dish = new Dish();
+
+        dish.setId(id);
+        dish.setStatus(status);
+
+        dishMapper.updateDish(dish);
+    }
 }

@@ -38,4 +38,12 @@ public interface DishService {
      * @return DishVO菜品VO对象类
      */
     DishVO getDishVOById(Long id);
+
+    /**
+     * 启用禁用菜品
+     *
+     * @param status 目标启用/禁用状态信息
+     * @param id     菜品id
+     */
+    void startOrStopDish(Integer status, Long id);
 }
