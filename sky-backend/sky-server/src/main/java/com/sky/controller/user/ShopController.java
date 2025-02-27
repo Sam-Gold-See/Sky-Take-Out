@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@Api()
-@Slf4j
+@RestController("userShopController")
 @RequestMapping("/user/shop")
+@Api("店铺相关接口")
+@Slf4j
 public class ShopController {
+
+    public static final String KEY = "SHOP_STATUS";
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -27,7 +29,7 @@ public class ShopController {
     @GetMapping("/status")
     @ApiOperation("获取店铺的营业状态")
     public Result<Integer> getStatus() {
-        Integer status = (Integer) redisTemplate.opsForValue().get("SHOP_STATUS");
+        Integer status = (Integer) redisTemplate.opsForValue().get(KEY);
         return Result.success(status);
     }
 }
