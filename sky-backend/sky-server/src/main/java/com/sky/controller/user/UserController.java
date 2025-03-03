@@ -57,7 +57,19 @@ public class UserController {
                 .openid(user.getOpenid())
                 .token(token)
                 .build();
-        
+
         return Result.success(userloginVO);
     }
+
+    /**
+     * 微信退出
+     *
+     * @return Result类响应对象
+     */
+    @PostMapping("/logout")
+    @ApiOperation("微信退出")
+    public Result logout() {
+        return Result.success();
+    }
+
 }
