@@ -8,6 +8,8 @@ import com.sky.enumeration.OperationType;
 import com.sky.vo.SetmealVO;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 @Mapper
 public interface SetmealMapper {
 
@@ -72,4 +74,13 @@ public interface SetmealMapper {
      */
     @Delete("delete from setmeal where id = #{id}")
     void deleteSetmealById(Long id);
+
+    /**
+     * 根据分类id查询套餐
+     *
+     * @param setmeal 套餐实体类对象（仅包含分类id和在售状态）
+     * @return List<Setmeal>套餐集合类
+     */
+    @Select("select * from setmeal where category_id = #{categoryId} and status = #{status}")
+    List<Setmeal> getSetmealByCategoryId(Setmeal setmeal);
 }

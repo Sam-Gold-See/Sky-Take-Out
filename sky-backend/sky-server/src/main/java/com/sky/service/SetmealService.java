@@ -2,6 +2,7 @@ package com.sky.service;
 
 import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
+import com.sky.entity.Setmeal;
 import com.sky.result.PageResult;
 import com.sky.vo.SetmealVO;
 
@@ -53,4 +54,12 @@ public interface SetmealService {
      * @param setmealDTO 套餐DTO类对象
      */
     void updateSetmeal(SetmealDTO setmealDTO);
+
+    /**
+     * 根据分类id查询套餐
+     *
+     * @param setmeal 菜品实体类对象（仅包含分类id和在售状态）
+     * @return List<Setmeal>套餐集合类
+     */
+    List<Setmeal> getSetmealByCategoryId(Setmeal setmeal);
 }

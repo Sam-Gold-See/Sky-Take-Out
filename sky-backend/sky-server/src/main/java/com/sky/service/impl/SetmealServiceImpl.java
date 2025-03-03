@@ -177,4 +177,15 @@ public class SetmealServiceImpl implements SetmealService {
 
         setmealDishMapper.insertSetmealDishes(setmealDishes);
     }
+
+    /**
+     * 根据分类id查询套餐
+     *
+     * @param setmeal 套餐实体类对象（仅包含分类id和在售状态）
+     * @return List<Setmeal>套餐集合类
+     */
+    @Override
+    public List<Setmeal> getSetmealByCategoryId(Setmeal setmeal) {
+        return setmealMapper.getSetmealByCategoryId(setmeal);
+    }
 }
