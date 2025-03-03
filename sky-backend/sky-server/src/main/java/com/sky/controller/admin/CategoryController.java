@@ -20,10 +20,10 @@ import java.util.Objects;
 /**
  * 分类管理
  */
-@RestController
+@RestController("adminCategoryController")
 @RequestMapping("/admin/category")
 @Slf4j
-@Api("员工相关接口")
+@Api("分类相关接口")
 public class CategoryController {
 
     @Autowired
