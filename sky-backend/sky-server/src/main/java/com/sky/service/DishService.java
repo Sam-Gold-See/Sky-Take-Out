@@ -62,4 +62,12 @@ public interface DishService {
      * @return List<Dish>菜品集合类
      */
     List<Dish> getDishListByCategoryId(Long categoryId);
+
+    /**
+     * 根据分类id查询菜品
+     *
+     * @param dish 菜品类实体对象（仅包含菜品分类id和在售状态）
+     * @return List<DishVO>菜品VO对象集合类
+     */
+    List<DishVO> getDishVOListByCategoryId(Dish dish);
 }
