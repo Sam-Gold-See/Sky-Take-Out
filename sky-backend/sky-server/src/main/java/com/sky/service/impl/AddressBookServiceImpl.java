@@ -25,5 +25,17 @@ public class AddressBookServiceImpl implements AddressBookService {
         addressBookMapper.add(addressBook);
     }
 
+    /**
+     * 查询当前用户的所有地址
+     *
+     * @return List<AddressBook>地址数据集合类
+     */
+    @Override
+    public List<AddressBook> list() {
+        Long userId = BaseContext.getCurrentId();
+        AddressBook addressBook = new AddressBook();
+        addressBook.setUserId(userId);
 
+        return addressBookMapper.list(addressBook);
+    }
 }

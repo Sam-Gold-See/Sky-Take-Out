@@ -33,4 +33,15 @@ public class AddressBookController {
         return Result.success();
     }
 
+    /**
+     * 查询当前用户的所有地址
+     *
+     * @return Result类响应对象
+     */
+    @GetMapping("/list")
+    @ApiOperation("查询当前用户的所有地址")
+    public Result<List<AddressBook>> list() {
+        List<AddressBook> list = addressBookService.list();
+        return Result.success(list);
+    }
 }

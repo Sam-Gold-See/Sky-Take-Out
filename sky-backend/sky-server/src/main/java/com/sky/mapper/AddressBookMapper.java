@@ -18,5 +18,10 @@ public interface AddressBookMapper {
             "values (#{userId}, #{consignee}, #{sex}, #{phone}, #{provinceCode}, #{provinceName}, #{cityCode}, #{cityName}, #{districtCode}, #{districtName}, #{detail}, #{label})")
     void add(AddressBook addressBook);
 
-
+    /**
+     * 动态查询地址
+     *
+     * @return List<AddressBook>地址数据集合类
+     */
+    List<AddressBook> list(AddressBook addressBook);
 }

@@ -13,5 +13,10 @@ public interface AddressBookService {
      */
     void add(AddressBook addressBook);
 
-
+    /**
+     * 查询当前用户的所有地址
+     *
+     * @return List<AddressBook>地址数据集合类
+     */
+    List<AddressBook> list();
 }
