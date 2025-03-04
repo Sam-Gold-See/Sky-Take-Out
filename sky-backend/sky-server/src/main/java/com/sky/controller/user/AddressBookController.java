@@ -53,7 +53,7 @@ public class AddressBookController {
      */
     @GetMapping("/{id}")
     @ApiOperation("根据地址id查询地址")
-    public Result<AddressBook> getById(@RequestParam("id") Long id) {
+    public Result<AddressBook> getById(@PathVariable("id") Long id) {
         AddressBook addressBook = addressBookService.getById(id);
         return Result.success(addressBook);
     }
