@@ -25,6 +25,7 @@ public class AddressBookServiceImpl implements AddressBookService {
         Long userId = BaseContext.getCurrentId();
         addressBook.setUserId(userId);
         addressBook.setIsDefault(0);
+
         addressBookMapper.add(addressBook);
     }
 
@@ -40,5 +41,18 @@ public class AddressBookServiceImpl implements AddressBookService {
         addressBook.setUserId(userId);
 
         return addressBookMapper.list(addressBook);
+    }
+
+    /**
+     * 根据地址id查询地址
+     *
+     * @param id 地址id
+     * @return AddressBook类实体对象
+     */
+    @Override
+    public AddressBook getById(Long id) {
+        AddressBook addressBook = new AddressBook();
+        addressBook.setId(id);
+        return addressBookMapper.list(addressBook).get(0);
     }
 }

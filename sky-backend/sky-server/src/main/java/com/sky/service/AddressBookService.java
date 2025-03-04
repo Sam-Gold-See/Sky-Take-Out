@@ -19,4 +19,12 @@ public interface AddressBookService {
      * @return List<AddressBook>地址数据集合类
      */
     List<AddressBook> list();
+
+    /**
+     * 根据地址id查询地址
+     *
+     * @param id 地址id
+     * @return AddressBook类实体对象
+     */
+    AddressBook getById(Long id);
 }

@@ -44,4 +44,17 @@ public class AddressBookController {
         List<AddressBook> list = addressBookService.list();
         return Result.success(list);
     }
+
+    /**
+     * 根据地址id查询地址
+     *
+     * @param id 地址id
+     * @return Result类响应对象
+     */
+    @GetMapping("/{id}")
+    @ApiOperation("根据地址id查询地址")
+    public Result<AddressBook> getById(@RequestParam("id") Long id) {
+        AddressBook addressBook = addressBookService.getById(id);
+        return Result.success(addressBook);
+    }
 }
