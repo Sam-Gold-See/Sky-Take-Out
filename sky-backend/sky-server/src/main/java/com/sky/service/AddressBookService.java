@@ -41,4 +41,11 @@ public interface AddressBookService {
      * @param id 地址id
      */
     void setDefault(Long id);
+
+    /**
+     * 根据id修改地址
+     *
+     * @param addressBook 地址类实体对象
+     */
+    void updateById(AddressBook addressBook);
 }

@@ -103,4 +103,14 @@ public class AddressBookServiceImpl implements AddressBookService {
         addressBook.setId(id);
         addressBookMapper.update(addressBook);
     }
+
+    /**
+     * 根据id修改地址
+     *
+     * @param addressBook 地址类实体对象
+     */
+    @Override
+    public void updateById(AddressBook addressBook) {
+        addressBookMapper.update(addressBook);
+    }
 }
