@@ -110,4 +110,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 shoppingCartMapper.updateNumberById(cart);
         }
     }
+
+    /**
+     * 清空购物车数据
+     */
+    @Override
+    public void cleanShoppingCart() {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.setUserId(BaseContext.getCurrentId());
+
+        shoppingCartMapper.deleteShoppingCart(shoppingCart);
+    }
 }
