@@ -29,6 +29,13 @@ public interface AddressBookService {
     AddressBook getById(Long id);
 
     /**
+     * 查询默认地址
+     *
+     * @return AddressBook类实体对象
+     */
+    AddressBook getDefault();
+
+    /**
      * 设置用户默认地址
      *
      * @param id 地址id

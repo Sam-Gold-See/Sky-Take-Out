@@ -70,4 +70,16 @@ public class AddressBookController {
         addressBookService.setDefault(id);
         return Result.success();
     }
+
+    /**
+     * 查询默认地址
+     *
+     * @return Result类响应对象
+     */
+    @GetMapping("/default")
+    @ApiOperation("查询默认地址")
+    public Result<AddressBook> getDefault() {
+        AddressBook addressBook = addressBookService.getDefault();
+        return Result.success(addressBook);
+    }
 }
