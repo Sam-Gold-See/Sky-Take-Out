@@ -57,4 +57,17 @@ public class AddressBookController {
         AddressBook addressBook = addressBookService.getById(id);
         return Result.success(addressBook);
     }
+
+    /**
+     * 设置用户默认地址
+     *
+     * @param id 地址id
+     * @return Result类响应对象
+     */
+    @PutMapping("/default")
+    @ApiOperation("设置用户默认地址")
+    public Result setDefault(Long id) {
+        addressBookService.setDefault(id);
+        return Result.success();
+    }
 }

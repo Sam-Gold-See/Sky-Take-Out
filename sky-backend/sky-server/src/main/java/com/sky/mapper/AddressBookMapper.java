@@ -24,4 +24,11 @@ public interface AddressBookMapper {
      * @return List<AddressBook>地址数据集合类
      */
     List<AddressBook> list(AddressBook addressBook);
+
+    /**
+     * 动态更新地址
+     *
+     * @param addressBook 地址实体类对象
+     */
+    void update(AddressBook addressBook);
 }

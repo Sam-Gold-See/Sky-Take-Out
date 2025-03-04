@@ -27,4 +27,11 @@ public interface AddressBookService {
      * @return AddressBook类实体对象
      */
     AddressBook getById(Long id);
+
+    /**
+     * 设置用户默认地址
+     *
+     * @param id 地址id
+     */
+    void setDefault(Long id);
 }
