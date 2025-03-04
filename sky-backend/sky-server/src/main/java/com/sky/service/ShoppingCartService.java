@@ -21,4 +21,11 @@ public interface ShoppingCartService {
      * @return List<ShoppingCart>购物车数据集合类
      */
     List<ShoppingCart> getShoppingCartList();
+
+    /**
+     * 删除购物车中当前商品
+     *
+     * @param shoppingCartDTO 购物车DTO对象
+     */
+    void subShoppingCart(ShoppingCartDTO shoppingCartDTO);
 }

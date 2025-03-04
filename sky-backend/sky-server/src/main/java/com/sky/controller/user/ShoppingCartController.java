@@ -45,4 +45,17 @@ public class ShoppingCartController {
         List<ShoppingCart> list = shoppingCartService.getShoppingCartList();
         return Result.success(list);
     }
+
+    /**
+     * 删除购物车中当前商品
+     *
+     * @param shoppingCartDTO 购物车DTO对象
+     * @return Result类响应对象
+     */
+    @PostMapping("/sub")
+    @ApiOperation("删除购物车中物品")
+    public Result subShoppingCart(@RequestBody ShoppingCartDTO shoppingCartDTO) {
+        shoppingCartService.subShoppingCart(shoppingCartDTO);
+        return Result.success();
+    }
 }

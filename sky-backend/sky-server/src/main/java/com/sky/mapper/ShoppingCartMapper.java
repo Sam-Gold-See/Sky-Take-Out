@@ -34,4 +34,11 @@ public interface ShoppingCartMapper {
     @Insert("insert into shopping_cart (name, image, user_id, dish_id, setmeal_id, dish_flavor, amount, create_time) " +
             "values(#{name}, #{image}, #{userId}, #{dishId}, #{setmealId}, #{dishFlavor}, #{amount}, #{createTime})")
     void insertShoppingCart(ShoppingCart shoppingCart);
+
+    /**
+     * 动态删除购物车数据
+     *
+     * @param shoppingCart 购物车实体对象
+     */
+    void deleteShoppingCart(ShoppingCart shoppingCart);
 }
