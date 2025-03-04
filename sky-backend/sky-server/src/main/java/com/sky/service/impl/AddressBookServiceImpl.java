@@ -22,6 +22,9 @@ public class AddressBookServiceImpl implements AddressBookService {
      */
     @Override
     public void add(AddressBook addressBook) {
+        Long userId = BaseContext.getCurrentId();
+        addressBook.setUserId(userId);
+        addressBook.setIsDefault(0);
         addressBookMapper.add(addressBook);
     }
 
