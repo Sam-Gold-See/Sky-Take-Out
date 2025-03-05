@@ -28,7 +28,7 @@ public interface OrderMapper {
     Orders getByNumber(String orderNumber);
 
     /**
-     * 修改订单信息
+     * 动态修改订单信息
      *
      * @param orders 订单对象
      */

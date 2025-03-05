@@ -217,4 +217,37 @@ public class OrderServiceImpl implements OrderService {
 
         return orderVO;
     }
+
+    /**
+     * 取消订单
+     *
+     * @param id 订单id
+     */
+    @Override
+    public void cancel(Long id) throws Exception {
+        List<Orders> ordersList = orderMapper.list(Orders.builder().id(id).build());
+        if (ordersList == null || ordersList.isEmpty())
+            throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
+
+        Orders canceledOrders = ordersList.get(0);
+        if (canceledOrders.getStatus() > Orders.TO_BE_CONFIRMED)
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+
+        Orders orders = new Orders();
+        orders.setId(canceledOrders.getId());
+
+        if (canceledOrders.getStatus().equals(Orders.TO_BE_CONFIRMED)) {
+            weChatPayUtil.refund(
+                    canceledOrders.getNumber(),
+                    canceledOrders.getNumber(),
+                    new BigDecimal("0.01"),
+                    new BigDecimal("0.01"));
+            orders.setPayStatus(Orders.REFUND);
+        }
+
+        orders.setStatus(Orders.CANCELLED);
+        orders.setCancelReason("用户取消");
+        orders.setCancelTime(LocalDateTime.now());
+        orderMapper.update(orders);
+    }
 }
