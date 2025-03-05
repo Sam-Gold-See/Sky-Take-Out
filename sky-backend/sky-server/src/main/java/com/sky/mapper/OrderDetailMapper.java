@@ -17,7 +17,7 @@ public interface OrderDetailMapper {
     void insertBatch(List<OrderDetail> orderDetailList);
 
     /**
-     * 动态查询订单
+     * 动态查询订单详情
      *
      * @param orders 目标订单类型
      */

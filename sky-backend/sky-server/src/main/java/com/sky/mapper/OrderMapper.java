@@ -6,6 +6,8 @@ import com.sky.entity.Orders;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface OrderMapper {
 
@@ -39,4 +41,12 @@ public interface OrderMapper {
      * @return Page<Orders>订单分页对象
      */
     Page<Orders> getListPage(OrdersPageQueryDTO ordersPageQueryDTO);
+
+    /**
+     * 动态查询订单
+     *
+     * @param orders 订单实体对象
+     * @return Orders类实体对象
+     */
+    List<Orders> list(Orders orders);
 }
