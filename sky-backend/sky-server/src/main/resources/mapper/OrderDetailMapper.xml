@@ -15,8 +15,8 @@
             <if test="userId != null">
                 user_id = #{userId}
             </if>
-            <if test="number != null">
-                number = #{number}
+            <if test="id != null">
+                id = #{id}
             </if>
         </where>
     </select>
