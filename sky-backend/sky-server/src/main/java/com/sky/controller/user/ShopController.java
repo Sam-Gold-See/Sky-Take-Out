@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController("userShopController")
 @RequestMapping("/user/shop")
-@Api("店铺相关接口")
+@Api(tags = "C端店铺相关接口")
 @Slf4j
 public class ShopController {
 

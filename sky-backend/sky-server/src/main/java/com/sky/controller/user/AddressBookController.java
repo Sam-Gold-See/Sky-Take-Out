@@ -13,7 +13,7 @@ import java.util.List;
 
 @Slf4j
 @RestController()
-@Api("地址簿相关接口")
+@Api(tags = "C端地址簿相关接口")
 @RequestMapping("/user/addressBook")
 public class AddressBookController {
 
