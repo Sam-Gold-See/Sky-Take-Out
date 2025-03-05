@@ -1,5 +1,6 @@
 package com.sky.service.impl;
 
+import com.sky.constant.DefaultConstant;
 import com.sky.constant.MessageConstant;
 import com.sky.context.BaseContext;
 import com.sky.entity.AddressBook;
@@ -56,7 +57,7 @@ public class AddressBookServiceImpl implements AddressBookService {
     public AddressBook getById(Long id) {
         AddressBook addressBook = new AddressBook();
         addressBook.setId(id);
-        return addressBookMapper.list(addressBook).get(0);
+        return addressBookMapper.list(addressBook).get(DefaultConstant.NOT_DEFAULT);
     }
 
     /**
@@ -69,7 +70,7 @@ public class AddressBookServiceImpl implements AddressBookService {
         Long userId = BaseContext.getCurrentId();
         AddressBook addressBook = AddressBook.builder()
                 .userId(userId)
-                .isDefault(1)
+                .isDefault(DefaultConstant.DEFAULT)
                 .build();
         List<AddressBook> list = addressBookMapper.list(addressBook);
         if (list != null && list.size() == 1)
@@ -90,18 +91,18 @@ public class AddressBookServiceImpl implements AddressBookService {
 
         AddressBook oldAddressBook = AddressBook.builder()
                 .userId(userId)
-                .isDefault(1)
+                .isDefault(DefaultConstant.DEFAULT)
                 .build();
 
         List<AddressBook> list = addressBookMapper.list(oldAddressBook);
 
         if (list != null && !list.isEmpty())
             for (AddressBook temp : list) {
-                temp.setIsDefault(0);
+                temp.setIsDefault(DefaultConstant.NOT_DEFAULT);
                 addressBookMapper.update(temp);
             }
 
-        addressBook.setIsDefault(1);
+        addressBook.setIsDefault(DefaultConstant.DEFAULT);
         addressBookMapper.update(addressBook);
     }
 
