@@ -38,9 +38,9 @@ public interface AddressBookService {
     /**
      * 设置用户默认地址
      *
-     * @param id 地址id
+     * @param addressBook 地址类实体对象
      */
-    void setDefault(Long id);
+    void setDefault(AddressBook addressBook);
 
     /**
      * 根据id修改地址

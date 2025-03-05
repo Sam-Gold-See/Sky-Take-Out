@@ -8,6 +8,7 @@ import com.sky.mapper.AddressBookMapper;
 import com.sky.service.AddressBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -80,27 +81,27 @@ public class AddressBookServiceImpl implements AddressBookService {
     /**
      * 设置用户默认地址
      *
-     * @param id 地址id
+     * @param addressBook 地址类实体对象
      */
+    @Transactional
     @Override
-    public void setDefault(Long id) {
+    public void setDefault(AddressBook addressBook) {
         Long userId = BaseContext.getCurrentId();
 
-        AddressBook addressBook = new AddressBook();
-        addressBook.setUserId(userId);
+        AddressBook oldAddressBook = AddressBook.builder()
+                .userId(userId)
+                .isDefault(1)
+                .build();
+
+        List<AddressBook> list = addressBookMapper.list(oldAddressBook);
+
+        if (list != null && !list.isEmpty())
+            for (AddressBook temp : list) {
+                temp.setIsDefault(0);
+                addressBookMapper.update(temp);
+            }
+
         addressBook.setIsDefault(1);
-
-        List<AddressBook> list = addressBookMapper.list(addressBook);
-
-        if (list != null && !list.isEmpty()) {
-            AddressBook oldAddressBook = AddressBook.builder()
-                    .id(list.get(0).getId())
-                    .isDefault(0)
-                    .build();
-            addressBookMapper.update(oldAddressBook);
-        }
-
-        addressBook.setId(id);
         addressBookMapper.update(addressBook);
     }
 

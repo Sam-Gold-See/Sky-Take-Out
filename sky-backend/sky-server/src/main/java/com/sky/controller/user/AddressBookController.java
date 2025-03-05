@@ -61,13 +61,13 @@ public class AddressBookController {
     /**
      * 设置用户默认地址
      *
-     * @param id 地址id
+     * @param addressBook 地址类实体对象
      * @return Result类响应对象
      */
     @PutMapping("/default")
     @ApiOperation("设置用户默认地址")
-    public Result setDefault(Long id) {
-        addressBookService.setDefault(id);
+    public Result setDefault(@RequestBody AddressBook addressBook) {
+        addressBookService.setDefault(addressBook);
         return Result.success();
     }
 
