@@ -9,4 +9,15 @@
             #{od.amount})
         </foreach>
     </insert>
+    <select id="list" resultType="com.sky.entity.OrderDetail">
+        select * from order_detail
+        <where>
+            <if test="userId != null">
+                user_id = #{userId}
+            </if>
+            <if test="number != null">
+                number = #{number}
+            </if>
+        </where>
+    </select>
 </mapper>
