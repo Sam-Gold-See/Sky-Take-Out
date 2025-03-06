@@ -1,5 +1,7 @@
 package com.sky.controller.admin;
 
+import com.sky.dto.OrdersPageQueryDTO;
+import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.OrderService;
 import com.sky.vo.OrderVO;
@@ -32,5 +34,18 @@ public class OrderController {
     public Result<OrderVO> details(@PathVariable Long id) {
         OrderVO orderVO = orderService.details(id);
         return Result.success();
+    }
+
+    /**
+     * 订单条件搜索
+     *
+     * @param ordersPageQueryDTO 订单分页查询DTO对象
+     * @return Result类响应对象
+     */
+    @GetMapping("/conditionSearch")
+    @ApiOperation("订单条件搜索")
+    public Result<PageResult> condistionSerach(OrdersPageQueryDTO ordersPageQueryDTO) {
+        PageResult pageResult = orderService.conditionSearch(ordersPageQueryDTO);
+        return Result.success(pageResult);
     }
 }

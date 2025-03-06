@@ -179,9 +179,9 @@ public class OrderServiceImpl implements OrderService {
         Page<Orders> page = orderMapper.getListPage(ordersPageQueryDTO);
 
         long total = page.getTotal();
-        List<Orders> records = new ArrayList<>();
+        List<OrderVO> records = new ArrayList<>();
 
-        if (page.getTotal() > 0)
+        if (total > 0)
             for (Orders orders : page) {
                 Long orderId = orders.getId();
 
@@ -264,15 +264,58 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDetail> orderDetailList = orderDetailMapper.list(Orders.builder().id(id).build());
 
         List<ShoppingCart> shoppingCartList = orderDetailList.stream().map(orderDetail -> {
-           ShoppingCart shoppingCart = new ShoppingCart();
+            ShoppingCart shoppingCart = new ShoppingCart();
 
-           BeanUtils.copyProperties(orderDetail, shoppingCart, "id");
-           shoppingCart.setUserId(userId);
-           shoppingCart.setCreateTime(LocalDateTime.now());
+            BeanUtils.copyProperties(orderDetail, shoppingCart, "id");
+            shoppingCart.setUserId(userId);
+            shoppingCart.setCreateTime(LocalDateTime.now());
 
-           return shoppingCart;
+            return shoppingCart;
         }).collect(Collectors.toList());
 
         shoppingCartMapper.insertShoppingCartBatch(shoppingCartList);
+    }
+
+    /**
+     * 订单条件搜索
+     *
+     * @param ordersPageQueryDTO 订单分页查询DTO对象
+     * @return PageResult类响应对象
+     */
+    @Override
+    public PageResult conditionSearch(OrdersPageQueryDTO ordersPageQueryDTO) {
+        PageHelper.startPage(ordersPageQueryDTO.getPage(), ordersPageQueryDTO.getPageSize());
+
+        Page<Orders> page = orderMapper.getListPage(ordersPageQueryDTO);
+
+        List<OrderVO> records = getOrderVOList(page);
+
+        return new PageResult(page.getTotal(), records);
+    }
+
+    private List<OrderVO> getOrderVOList(Page<Orders> page) {
+        List<OrderVO> orderVOList = new ArrayList<>();
+
+        List<Orders> ordersList = page.getResult();
+        if (!ordersList.isEmpty())
+            for (Orders orders : ordersList) {
+                OrderVO orderVO = new OrderVO();
+                BeanUtils.copyProperties(orders, orderVO);
+                String orderDishes = getOrderDishesStr(Orders.builder().id(orders.getId()).build());
+
+                orderVO.setOrderDishes(orderDishes);
+                orderVOList.add(orderVO);
+            }
+        return orderVOList;
+    }
+
+    private String getOrderDishesStr(Orders orders) {
+        List<OrderDetail> orderDetailList = orderDetailMapper.list(orders);
+
+        List<String> orderDishesList = orderDetailList.stream()
+                .map(orderDetail -> orderDetail.getName() + "*" + orderDetail.getNumber() + ";")
+                .collect(Collectors.toList());
+
+        return String.join(",", orderDishesList);
     }
 }
