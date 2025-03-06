@@ -33,4 +33,19 @@ public class OrderTask {
                 orderMapper.update(order);
             }
     }
+
+    /**
+     * 处理一直处于派送中的订单
+     */
+    @Scheduled(cron = "0 0 1 * * ?")
+    public void processDeliveryOrder() {
+        LocalDateTime time = LocalDateTime.now().plusMinutes(-60);
+        List<Orders> ordersList = orderMapper.getByStatusAndOrderTimeLT(Orders.DELIVERY_IN_PROGRESS, time);
+
+        if (ordersList != null && !ordersList.isEmpty())
+            for (Orders order : ordersList) {
+                order.setStatus(Orders.COMPLETED);
+                orderMapper.update(order);
+            }
+    }
 }
