@@ -33,7 +33,7 @@ public class OrderController {
     @ApiOperation("查询订单详情")
     public Result<OrderVO> details(@PathVariable Long id) {
         OrderVO orderVO = orderService.details(id);
-        return Result.success();
+        return Result.success(orderVO);
     }
 
     /**

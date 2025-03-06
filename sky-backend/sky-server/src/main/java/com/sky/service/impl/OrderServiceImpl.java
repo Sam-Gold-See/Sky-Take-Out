@@ -207,14 +207,16 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public OrderVO details(Long id) {
-        List<Orders> ordersList = orderMapper.list(Orders.builder().id(id).build());
+        Orders searchOrders = Orders.builder().id(id).build();
+        List<Orders> ordersList = orderMapper.list(searchOrders);
         Orders orders = ordersList.get(0);
 
-        List<OrderDetail> orderDetailList = orderDetailMapper.list(Orders.builder().id(id).build());
+        List<OrderDetail> orderDetailList = orderDetailMapper.list(searchOrders);
 
         OrderVO orderVO = new OrderVO();
         BeanUtils.copyProperties(orders, orderVO);
         orderVO.setOrderDetailList(orderDetailList);
+        orderVO.setOrderDishes(getOrderDishesStr(searchOrders));
 
         return orderVO;
     }
