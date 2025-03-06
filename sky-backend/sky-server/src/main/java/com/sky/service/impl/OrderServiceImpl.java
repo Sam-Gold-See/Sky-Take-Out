@@ -410,12 +410,33 @@ public class OrderServiceImpl implements OrderService {
         List<Orders> ordersList = orderMapper.list(Orders.builder().id(id).build());
         Orders ordersDB = ordersList.get(0);
 
-        if (ordersDB.getStatus().equals(Orders.CONFIRMED))
+        if (!ordersDB.getStatus().equals(Orders.CONFIRMED))
             throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
 
         Orders orders = Orders.builder()
                 .id(id)
                 .status(Orders.DELIVERY_IN_PROGRESS)
+                .build();
+
+        orderMapper.update(orders);
+    }
+
+    /**
+     * 完成订单
+     *
+     * @param id 订单id
+     */
+    @Override
+    public void complete(Long id) {
+        List<Orders> ordersList = orderMapper.list(Orders.builder().id(id).build());
+        Orders ordersDB = ordersList.get(0);
+
+        if (!ordersDB.getStatus().equals(Orders.DELIVERY_IN_PROGRESS))
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+
+        Orders orders = Orders.builder()
+                .id(id)
+                .status(Orders.COMPLETED)
                 .build();
 
         orderMapper.update(orders);
