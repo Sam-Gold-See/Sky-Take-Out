@@ -400,6 +400,27 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.update(orders);
     }
 
+    /**
+     * 派送订单
+     *
+     * @param id 订单id
+     */
+    @Override
+    public void delivery(Long id) {
+        List<Orders> ordersList = orderMapper.list(Orders.builder().id(id).build());
+        Orders ordersDB = ordersList.get(0);
+
+        if (ordersDB.getStatus().equals(Orders.CONFIRMED))
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+
+        Orders orders = Orders.builder()
+                .id(id)
+                .status(Orders.DELIVERY_IN_PROGRESS)
+                .build();
+
+        orderMapper.update(orders);
+    }
+
     private List<OrderVO> getOrderVOList(Page<Orders> page) {
         List<OrderVO> orderVOList = new ArrayList<>();
 
