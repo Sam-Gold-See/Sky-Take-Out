@@ -4,6 +4,7 @@ import com.sky.entity.Orders;
 import com.sky.mapper.OrderMapper;
 import com.sky.mapper.UserMapper;
 import com.sky.service.ReportService;
+import com.sky.vo.OrderReportVO;
 import com.sky.vo.TurnoverReportVO;
 import com.sky.vo.UserReportVO;
 import org.apache.commons.lang.StringUtils;
@@ -53,8 +54,7 @@ public class ReportServiceImpl implements ReportService {
             map.put("end", endTime);
             map.put("status", Orders.COMPLETED);
             Double turnover = orderMapper.sumByMap(map);
-            turnover = turnover == null ? 0 : turnover;
-            turnoverList.add(turnover);
+            turnoverList.add(turnover == null ? 0 : turnover);
         }
 
         return TurnoverReportVO.builder()
@@ -89,18 +89,69 @@ public class ReportServiceImpl implements ReportService {
             newUserListMap.put("begin", beginTime);
             newUserListMap.put("end", endTime);
             Integer newUserCount = userMapper.countByMap(newUserListMap);
-            newUserList.add(newUserCount);
+            newUserList.add(newUserCount == null ? 0 : newUserCount);
 
             Map totalUserListMap = new HashMap();
             totalUserListMap.put("end", endTime);
             Integer totalUserCount = userMapper.countByMap(totalUserListMap);
-            totalUserList.add(totalUserCount);
+            totalUserList.add(totalUserCount == null ? 0 : totalUserCount);
         }
 
         return UserReportVO.builder()
                 .dateList(StringUtils.join(dateList, ","))
                 .totalUserList(StringUtils.join(totalUserList, ","))
                 .newUserList(StringUtils.join(newUserList, ","))
+                .build();
+    }
+
+    /**
+     * 订单数统计
+     *
+     * @param begin 开始日期
+     * @param end   结束日期
+     * @return OrderReportVO订单报表VO对象
+     */
+    @Override
+    public OrderReportVO getOrderStatistics(LocalDate begin, LocalDate end) {
+        List<LocalDate> dateList = new ArrayList<>();
+
+        while (!begin.isAfter(end)) {
+            dateList.add(begin);
+            begin = begin.plusDays(1);
+        }
+
+        List<Integer> orderCountList = new ArrayList<>();
+        List<Integer> validOrderCountList = new ArrayList<>();
+        int totalOrderCount = 0;
+        int totalValidOrderCount = 0;
+
+        for (LocalDate date : dateList) {
+            LocalDateTime beginTime = LocalDateTime.of(date, LocalTime.MIN);
+            LocalDateTime endTime = LocalDateTime.of(date, LocalTime.MAX);
+
+            Map orderCountMap = new HashMap();
+            orderCountMap.put("begin", beginTime);
+            orderCountMap.put("end", endTime);
+            Integer orderCount = orderMapper.countByMap(orderCountMap);
+            orderCountList.add(orderCount == null ? 0 : orderCount);
+            totalOrderCount += orderCount;
+
+            Map validOrderCountMap = new HashMap();
+            validOrderCountMap.put("begin", beginTime);
+            validOrderCountMap.put("end", endTime);
+            validOrderCountMap.put("status", Orders.COMPLETED);
+            Integer validOrderCount = orderMapper.countByMap(validOrderCountMap);
+            validOrderCountList.add(validOrderCount == null ? 0 : validOrderCount);
+            totalValidOrderCount += validOrderCount;
+        }
+
+        return OrderReportVO.builder()
+                .dateList(StringUtils.join(dateList, ","))
+                .orderCountList(StringUtils.join(orderCountList, ","))
+                .validOrderCountList(StringUtils.join(validOrderCountList, ","))
+                .totalOrderCount(totalOrderCount)
+                .validOrderCount(totalValidOrderCount)
+                .orderCompletionRate(totalOrderCount == 0 ? 0 : (double) totalValidOrderCount / totalOrderCount * 100)
                 .build();
     }
 }
