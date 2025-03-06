@@ -78,4 +78,11 @@ public interface OrderService {
      * @return OrderStatisticsVO订单统计数据VO对象
      */
     OrderStatisticsVO statistics();
+
+    /**
+     * 接单
+     *
+     * @param id 订单id
+     */
+    void confirm(Long id);
 }

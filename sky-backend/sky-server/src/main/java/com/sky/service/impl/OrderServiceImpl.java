@@ -315,6 +315,21 @@ public class OrderServiceImpl implements OrderService {
         return orderStatisticsVO;
     }
 
+    /**
+     * 接单
+     *
+     * @param id 订单id
+     */
+    @Override
+    public void confirm(Long id) {
+        Orders orders = Orders.builder()
+                .id(id)
+                .status(Orders.CONFIRMED)
+                .build();
+
+        orderMapper.update(orders);
+    }
+
     private List<OrderVO> getOrderVOList(Page<Orders> page) {
         List<OrderVO> orderVOList = new ArrayList<>();
 
