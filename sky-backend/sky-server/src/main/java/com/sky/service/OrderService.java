@@ -5,6 +5,7 @@ import com.sky.dto.OrdersPaymentDTO;
 import com.sky.dto.OrdersSubmitDTO;
 import com.sky.result.PageResult;
 import com.sky.vo.OrderPaymentVO;
+import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
 
@@ -70,4 +71,11 @@ public interface OrderService {
      * @return PageResult类响应对象
      */
     PageResult conditionSearch(OrdersPageQueryDTO ordersPageQueryDTO);
+
+    /**
+     * 各个状态的订单数统计
+     *
+     * @return OrderStatisticsVO订单统计数据VO对象
+     */
+    OrderStatisticsVO statistics();
 }

@@ -49,4 +49,13 @@ public interface OrderMapper {
      * @return Orders类实体对象
      */
     List<Orders> list(Orders orders);
+
+    /**
+     * 查询指定状态订单数
+     *
+     * @param status 指定状态
+     * @return 订单数
+     */
+    @Select("select count(id) from orders where status = #{status}")
+    Integer count(Integer status);
 }
