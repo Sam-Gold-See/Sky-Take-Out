@@ -154,7 +154,7 @@ public class ReportServiceImpl implements ReportService {
                 .validOrderCountList(StringUtils.join(validOrderCountList, ","))
                 .totalOrderCount(totalOrderCount)
                 .validOrderCount(totalValidOrderCount)
-                .orderCompletionRate(totalOrderCount == 0 ? 0 : (double) totalValidOrderCount / totalOrderCount * 100)
+                .orderCompletionRate(totalOrderCount == 0 ? 0 : (double) totalValidOrderCount / totalOrderCount)
                 .build();
     }
 
