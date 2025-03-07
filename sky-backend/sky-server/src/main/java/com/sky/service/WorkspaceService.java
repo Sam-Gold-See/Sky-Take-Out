@@ -2,6 +2,7 @@ package com.sky.service;
 
 import com.sky.vo.BusinessDataVO;
 import com.sky.vo.DishOverViewVO;
+import com.sky.vo.OrderOverViewVO;
 import com.sky.vo.SetmealOverViewVO;
 
 import java.time.LocalDateTime;
@@ -30,4 +31,11 @@ public interface WorkspaceService {
      * @return DishOverViewVO菜品数据VO对象
      */
     DishOverViewVO getDishOverView();
+
+    /**
+     * 查询订单管理数据
+     *
+     * @return OrderOverViewVO订单管理数据VO对象
+     */
+    OrderOverViewVO getOrderOverView();
 }

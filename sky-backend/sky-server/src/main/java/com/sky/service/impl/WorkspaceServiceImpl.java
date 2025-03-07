@@ -9,11 +9,13 @@ import com.sky.mapper.UserMapper;
 import com.sky.service.WorkspaceService;
 import com.sky.vo.BusinessDataVO;
 import com.sky.vo.DishOverViewVO;
+import com.sky.vo.OrderOverViewVO;
 import com.sky.vo.SetmealOverViewVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -104,6 +106,39 @@ public class WorkspaceServiceImpl implements WorkspaceService {
         return DishOverViewVO.builder()
                 .sold(sold)
                 .discontinued(discontinued)
+                .build();
+    }
+
+    /**
+     * 查询订单管理数据
+     *
+     * @return OrderOverViewVO订单管理数据VO对象
+     */
+    @Override
+    public OrderOverViewVO getOrderOverView() {
+        Map map = new HashMap();
+        map.put("begin", LocalDateTime.now().with(LocalTime.MIN));
+
+        Integer allOrder = orderMapper.countByMap(map);
+
+        map.put("status", Orders.CANCELLED);
+        Integer cancelledOrder = orderMapper.countByMap(map);
+
+        map.put("status", Orders.COMPLETED);
+        Integer completedOrder = orderMapper.countByMap(map);
+
+        map.put("status", Orders.CONFIRMED);
+        Integer deliveryOrder = orderMapper.countByMap(map);
+
+        map.put("status", Orders.TO_BE_CONFIRMED);
+        Integer waitingOrder = orderMapper.countByMap(map);
+
+        return OrderOverViewVO.builder()
+                .waitingOrders(waitingOrder)
+                .deliveredOrders(deliveryOrder)
+                .completedOrders(completedOrder)
+                .cancelledOrders(cancelledOrder)
+                .allOrders(allOrder)
                 .build();
     }
 }
