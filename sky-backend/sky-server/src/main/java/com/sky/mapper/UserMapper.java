@@ -29,6 +29,7 @@ public interface UserMapper {
      * 动态查询用户数额
      *
      * @param map 参数列表
+     * @return 用户数
      */
     Integer countByMap(Map map);
 }
