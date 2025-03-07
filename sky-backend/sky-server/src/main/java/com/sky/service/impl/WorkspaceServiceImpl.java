@@ -11,9 +11,7 @@ import com.sky.vo.SetmealOverViewVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,40 +32,26 @@ public class WorkspaceServiceImpl implements WorkspaceService {
      * @return BusinessDataVO运营数据VO对象
      */
     @Override
-    public BusinessDataVO getBusinessData() {
-        LocalDate date = LocalDate.now();
-        LocalDateTime beginTime = LocalDateTime.of(date, LocalTime.MIN);
-        LocalDateTime endTime = LocalDateTime.of(date, LocalTime.MAX);
+    public BusinessDataVO getBusinessData(LocalDateTime begin, LocalDateTime end) {
 
-        Map newUserListMap = new HashMap();
-        newUserListMap.put("begin", beginTime);
-        newUserListMap.put("end", endTime);
-        Integer newUserCount = userMapper.countByMap(newUserListMap);
-        newUserCount = newUserCount == null ? 0 : newUserCount;
+        Map map = new HashMap();
+        map.put("begin", begin);
+        map.put("end", end);
 
-        Map orderCountMap = new HashMap();
-        orderCountMap.put("begin", beginTime);
-        orderCountMap.put("end", endTime);
-        Integer orderCount = orderMapper.countByMap(orderCountMap);
-        orderCount = orderCount == null ? 0 : orderCount;
+        Integer newUserCount = userMapper.countByMap(map);
 
-        Map validOrderCountMap = new HashMap();
-        validOrderCountMap.put("begin", beginTime);
-        validOrderCountMap.put("end", endTime);
-        validOrderCountMap.put("status", Orders.COMPLETED);
-        Integer validOrderCount = orderMapper.countByMap(validOrderCountMap);
-        validOrderCount = validOrderCount == null ? 0 : validOrderCount;
+        Integer orderCount = orderMapper.countByMap(map);
+
+        map.put("status", Orders.COMPLETED);
+
+        Integer validOrderCount = orderMapper.countByMap(map);
+
+        Double turnover = orderMapper.sumByMap(map);
+        turnover = turnover == null ? 0 : turnover;
 
         Double orderCompletionRate = orderCount == 0 ? 0 : (double) validOrderCount / orderCount;
 
-        Map turnoverMap = new HashMap();
-        turnoverMap.put("begin", beginTime);
-        turnoverMap.put("end", endTime);
-        turnoverMap.put("status", Orders.COMPLETED);
-        Double turnover = orderMapper.sumByMap(turnoverMap);
-        turnover = turnover == null ? 0 : turnover;
-
-        Double unitPrice = validOrderCount == 0 ? 0 : (double) turnover / validOrderCount;
+        Double unitPrice = validOrderCount == 0 ? 0 : turnover / validOrderCount;
 
         return BusinessDataVO.builder()
                 .newUsers(newUserCount)
